@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Grid Layout</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(4, 100px);
+      grid-auto-rows: 100px;
+      grid-auto-columns: 1fr;
+      gap: 5px;
+      width: 1000px;
+    }
+
+    .box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+    }
+
+    .box1 { background: deepskyblue; grid-column: 1 / 2; grid-row: 1 / 2; }
+    .box2 { background: cyan; grid-column: 2 / 4; grid-row: 1 / 4; }
+    .box3 { background: orange; grid-column: 4 / 7; grid-row: 1 / 2; }
+    .box4 { background: red; grid-column: 1 / 2; grid-row: 2 / 4; }
+    .box5 { background: green; grid-column: 4 / 7; grid-row: 2 / 5; }
+    .box6 { background: deepskyblue; grid-column: 1 / 2; grid-row: 4 / 5; }
+    .box7 { background: deepskyblue; grid-column: 2 / 4; grid-row: 4 / 5; }
+    .box8 { background: deepskyblue; grid-column: 1 / 2; grid-row: 5 / 7; }
+    .box9 { background: deepskyblue; grid-column: 2 / 7; grid-row: 5 / 7; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="box box1">Box 1</div>
+    <div class="box box2">Box 2</div>
+    <div class="box box3">Box 3</div>
+    <div class="box box4">Box 4</div>
+    <div class="box box5">Box 5</div>
+    <div class="box box6">Box 6</div>
+    <div class="box box7">Box 7</div>
+    <div class="box box8">Box 8</div>
+    <div class="box box9">Box 9</div>
+  </div>
+</body>
+</html>
+
+
