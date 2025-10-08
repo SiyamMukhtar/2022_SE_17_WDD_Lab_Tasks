@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Blog Cards - Siyam Mukhtar</title>
+  <style>
+    body {
+      font-family: "Poppins", Arial, sans-serif;
+      background: #f3f5f8;
+      margin: 0;
+      padding: 30px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    h2.subtitle {
+      text-align: center;
+      color: #555;
+      font-size: 16px;
+      font-weight: 400;
+      margin-bottom: 30px;
+    }
+
+    #blog-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .card-body {
+      padding: 15px;
+    }
+
+    .card-body h3 {
+      font-size: 18px;
+      margin: 5px 0;
+      color: #1a1a1a;
+    }
+
+    .meta {
+      font-size: 13px;
+      color: #777;
+      margin-bottom: 10px;
+    }
+
+    .desc {
+      font-size: 14px;
+      color: #444;
+      line-height: 1.5;
+      margin-bottom: 15px;
+    }
+
+    .read-btn {
+      display: inline-block;
+      padding: 8px 14px;
+      background: #0077cc;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.2s;
+    }
+    .read-btn:hover {
+      background: #005fa3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>My Blog Posts</h1>
+  <h2 class="subtitle">Created by Siyam Mukhtar</h2>
+
+  <div id="blog-container"></div>
+
+  <script>
+
+const blogs = [
+      {
+        title: "Exploring HTML5 Features",
+        author: "Siyam Mukhtar",
+        date: "September 25, 2025",
+        description: "HTML5 brings exciting features like audio/video support, local storage, and canvas that make web pages more dynamic.",
+        image: "https://picsum.photos/seed/html5/400/250"
+      },
+      {
+        title: "Understanding JavaScript Events",
+        author: "Sara Ahmed",
+        date: "August 10, 2025",
+        description: "Events are the heart of interactivity in JavaScript. Learn how to handle clicks, inputs, and custom events easily.",
+        image: "https://picsum.photos/seed/events/400/250"
+      },
+      {
+        title: "Mastering CSS Flexbox",
+        author: "Ali Raza",
+        date: "July 3, 2025",
+        description: "Flexbox simplifies layouts with alignment and spacing control. This post explains its main properties with simple examples.",
+        image: "https://picsum.photos/seed/flex/400/250"
+      },
+      {
+        title: "Introduction to DOM Manipulation",
+        author: "Siyam Mukhtar",
+        date: "June 15, 2025",
+        description: "Learn how JavaScript interacts with HTML elements using the Document Object Model (DOM) for dynamic web pages.",
+        image: "https://picsum.photos/seed/dom/400/250"
+      }
+    ];
+
+    const container = document.getElementById("blog-container");
+
+    blogs.forEach((post, index) => {
+      const card = document.createElement("div");
+      card.className = "card";
+
+      const img = document.createElement("img");
+      img.src = post.image;
+      img.alt = post.title;
+
+      const body = document.createElement("div");
+      body.className = "card-body";
+
+      const title = document.createElement("h3");
+      title.textContent = post.title;
+
+      const meta = document.createElement("p");
+      meta.className = "meta";
+      meta.textContent = `By ${post.author} • ${post.date}`;
+
+      const desc = document.createElement("p");
+      desc.className = "desc";
+      desc.textContent = post.description;
+
+      const btn = document.createElement("button");
+      btn.className = "read-btn";
+      btn.textContent = "Read More";
+      btn.onclick = () => {
+        alert(`Title: ${post.title}\n\nAuthor: ${post.author}\nDate: ${post.date}\n\n${post.description}`);
+      };
+
+      body.appendChild(title);
+      body.appendChild(meta);
+      body.appendChild(desc);
+      body.appendChild(btn);
+
+      card.appendChild(img);
+      card.appendChild(body);
+      container.appendChild(card);
+    });
+  </script>
+
+</body>
+</html>
