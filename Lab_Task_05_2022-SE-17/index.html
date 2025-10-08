@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Client Ramp - Manage Your Clients and Projects</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    :root{
+      --accent:#4dabf7;
+      --accent-dark:#3b9ae1;
+      --gold:#f59f00;
+      --bg-e6:#e6f2fc;
+      --text-dark:#222;
+      --muted:#555;
+      --white:#fff;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:'Poppins',sans-serif}
+    html,body{height:100%}
+    body{overflow-x:hidden;background:transparent;color:var(--text-dark)}
+
+    .h-wrap-a{display:flex;justify-content:space-between;align-items:center;width:80%;margin:0 auto;padding-top:17px;position:relative;z-index:10}
+    .h-brand{display:flex;align-items:center}
+    .h-brand img{height:40px;display:block}
+    .h-links{display:flex;align-items:center;gap:30px}
+    .h-links a{color:var(--white);text-decoration:none;font-weight:500}
+
+    .h-cta{padding:10px 25px;border-radius:15px;font-weight:700;background:var(--gold);color:var(--white);text-decoration:none;display:inline-block;transition:all .3s ease}
+
+    .hero-surface{
+      display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+      color:var(--white);
+      height:85vh;
+      margin-top:-80px;
+      padding:0 20px;
+      position:relative;
+      background-image: linear-gradient(rgba(27,42,58,0.85), rgba(15,25,35,0.9)), url('home-banner-bg.webp');
+      background-position:center;
+      background-size:cover;
+    }
+    .hero-overlay{position:absolute;inset:0;background:#000;opacity:.2;z-index:1}
+    .hero-inner{position:relative;z-index:2;max-width:800px}
+    .hero-inner h1{font-size:48px;font-weight:700;margin:65px 0 20px}
+    .hero-inner h1 span{color:var(--accent)}
+    .hero-inner p{font-size:18px;margin-bottom:40px}
+
+    .hero-actions{display:flex;justify-content:center;gap:20px;margin-bottom:20px}
+    .btn-a{padding:10px 25px;border-radius:15px;font-weight:700;text-decoration:none;display:inline-block;transition:all .3s ease;background:var(--gold);color:var(--white)}
+    .btn-b{padding:10px 25px;border-radius:15px;font-weight:700;text-decoration:none;display:inline-block;transition:all .3s ease;background:var(--accent);color:var(--white)}
+    .notice-line{display:flex;align-items:center;justify-content:center;gap:10px;font-size:14px;color:var(--white);margin-top:8px}
+
+
+    .bar-wrap{display:flex;justify-content:space-around;text-align:center;padding:50px 20px;background:var(--accent);color:var(--white);flex-wrap:wrap}
+    .bar-item{padding:0 20px;flex:1 1 20%;min-width:140px}
+    .bar-item .num{font-size:36px;font-weight:700;margin-bottom:10px}
+    .bar-item .lab{font-size:16px}
+
+    .section-shell{padding:80px 0}
+    .section-shell.bg-e6{background:var(--bg-e6)}
+    .section-shell.bg-white{background:#fff}
+    .section-inner{width:80%;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:50px;flex-wrap:wrap}
+    .box-info{flex:1 1 45%;min-width:280px}
+    .box-media{flex:1 1 45%;min-width:280px;border-radius:10px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.1)}
+    .box-media img{display:block;width:100%;height:auto}
+
+    .section-title{font-size:36px;font-weight:700;margin-bottom:20px;color:var(--text-dark)}
+    .section-sub{font-size:18px;margin-bottom:40px;line-height:1.6;color:var(--muted)}
+    .section-sub a{color:var(--accent);text-decoration:none}
+
+    .feature-block h3{font-size:24px;font-weight:600;margin-bottom:25px;color:var(--text-dark)}
+    .feature-list{list-style:none;padding:0;margin:0}
+    .feature-row{display:flex;align-items:center;margin-bottom:15px}
+    .feature-dot{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-right:15px;font-size:14px;background:var(--accent);color:var(--white)}
+    .feature-dot.alt{background:var(--gold)}
+    .feature-txt{font-size:16px;color:#444}
+
+    .cta-link{display:inline-block;background:var(--accent-dark);color:var(--white);border-radius:15px;padding:12px 24px;font-size:16px;font-weight:600;text-decoration:none;margin-top:30px}
+
+    /* SUPPORT */
+    .support-shell{background:#f9f9f9;padding:80px 0;text-align:center}
+    .support-grid{display:flex;justify-content:center;gap:50px;max-width:900px;margin:0 auto;flex-wrap:wrap}
+    .support-card{flex:1 1 200px;min-width:200px}
+    .support-card img{width:50px;height:50px;margin-bottom:20px}
+    .support-card h3{font-size:20px;font-weight:600;margin-bottom:10px}
+    .support-card p{font-size:16px;color:var(--muted);line-height:1.6}
+
+    /* PLANS */
+    .plans-shell{background:var(--bg-e6);padding:80px 0;text-align:center}
+    .plans-wrap{width:80%;margin:0 auto;display:flex;justify-content:center;gap:30px;flex-wrap:wrap}
+    .plan-card{flex:1 1 260px;max-width:300px;background:#fff;border-radius:10px;padding:20px;box-shadow:0 5px 15px rgba(0,0,0,0.1)}
+    .plan-card h3{font-size:24px;font-weight:600;margin-bottom:10px;color:var(--text-dark)}
+    .plan-price{font-size:20px;font-weight:700;color:var(--accent);margin-bottom:20px}
+    .plan-card ul{list-style:none;text-align:left;margin:0 0 20px 0;padding:0}
+    .plan-card li{font-size:16px;color:#444;margin-bottom:10px;display:flex;align-items:center}
+    .plan-card li::before{content:"✓";color:var(--accent);margin-right:10px}
+    .order-btn{display:inline-block;background:var(--accent-dark);color:var(--white);border-radius:15px;padding:10px 20px;font-size:16px;font-weight:600;text-decoration:none}
+
+    /* FOOTER */
+    .f-wrap{background:var(--accent);color:var(--white);padding:40px 0;text-align:center}
+    .f-inner{width:80%;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:20px}
+    .f-logo img{height:40px;margin-bottom:10px}
+    .f-nav{list-style:none;text-align:left;padding:0;margin:0}
+    .f-nav li{margin-bottom:10px}
+    .f-nav a{color:var(--white);text-decoration:none;font-size:14px}
+    .f-contact{text-align:right}
+    .f-contact p{margin-bottom:10px;font-size:14px}
+    .f-social a{color:var(--white);margin:0 10px;font-size:18px;text-decoration:none}
+    .f-social a:hover{color:var(--gold)}
+    .f-copy{font-size:12px;margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.2);width:80%;margin-left:auto;margin-right:auto}
+
+    .f-partners{display:flex;justify-content:center;gap:30px;margin-top:20px}
+    .f-partners img{height:30px;filter:brightness(0) invert(1)}
+    a[href] {transition:transform .18s ease, box-shadow .18s ease}
+    a[href]:hover{transform:translateY(-3px);box-shadow:0 5px 15px rgba(0,0,0,0.1)}
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    .hamburger span {
+      height: 4px;
+      width: 100%;
+      background: var(--white);
+      margin: 5px 0;
+      border-radius: 2px;
+      transition: all 0.3s;
+      display: block;
+    }
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -260px;
+      width: 240px;
+      height: 100vh;
+      background: var(--accent);
+      color: var(--white);
+      box-shadow: -2px 0 10px rgba(0,0,0,0.08);
+      transition: right 0.3s;
+      z-index: 1000;
+      padding: 40px 20px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+    .sidebar.open {
+      right: 0;
+    }
+    .sidebar .close-btn {
+      align-self: flex-end;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 28px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+    .sidebar a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .sidebar a.h-cta {
+      background: var(--gold);
+      color: var(--white);
+      border-radius: 12px;
+      padding: 10px 18px;
+      margin-top: 10px;
+      font-weight: 700;
+      text-align: center;
+    }
+    @media (max-width: 768px) {
+      .h-wrap-a {
+        width: 100%;
+        padding: 12px 10px 0 10px;
+      }
+      .h-links {
+        display: none;
+      }
+      .hamburger {
+        display: flex;
+      }
+    }
+    @media (min-width: 769px) {
+      .sidebar {
+        display: none !important;
+      }
+    }
+  </style>
+  
+</head>
+
+<body>
+  <!-- Header -->
+  <div class="h-wrap-a" data-s="hdr01">
+    <div class="h-brand" data-s="brand01">
+      <img src="logo-client-ramp1.webp" alt="Client Ramp Logo" data-s="logo01">
+    </div>
+    <!-- Hamburger for mobile -->
+    <div class="hamburger" id="hamburger-menu" aria-label="Open navigation" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="h-links" data-s="nav01">
+      <a href="#" data-s="nav-link">Support</a>
+      <a href="#" data-s="nav-link">FAQ</a>
+      <a href="#" data-s="nav-link">Contact Us</a>
+      <a href="#" data-s="nav-link">Sign In</a>
+      <a href="#" class="h-cta" data-s="top-cta">Get Started Now →</a>
+    </div>
+  </div>
+  <nav class="sidebar" id="sidebar-nav" aria-label="Sidebar Navigation">
+    <button class="close-btn" id="close-sidebar" aria-label="Close navigation">&times;</button>
+    <a href="#">Support</a>
+    <a href="#">FAQ</a>
+    <a href="#">Contact Us</a>
+    <a href="#">Sign In</a>
+    <a href="#" class="h-cta">Get Started Now →</a>
+  </nav>
+  <main class="hero-surface" role="main" data-s="hero-main">
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+    <div class="hero-inner" data-s="hero-in">
+      <h1 data-s="hero-title">Manage Your <span>Clients and Projects</span></h1>
+      <p data-s="hero-sub">All-in-One CRM, Project Management and Client Relationship Tools.</p>
+
+      <div class="hero-actions" data-s="hero-acts">
+        <a href="#" class="btn-a" data-s="cta1">Get Start Now</a>
+        <a href="#" class="btn-b" data-s="cta2">Sign In</a>
+      </div>
+
+      <div class="notice-line" data-s="nocard">
+        <span>No credit card required to get started!</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- Stats -->
+  <section class="bar-wrap" aria-label="stats" data-s="stats01">
+    <div class="bar-item" data-s="b1"><div class="num">2,486</div><div class="lab">Subscribers</div></div>
+    <div class="bar-item" data-s="b2"><div class="num">645,089</div><div class="lab">Open Projects</div></div>
+    <div class="bar-item" data-s="b3"><div class="num">152,834</div><div class="lab">Finished Projects</div></div>
+    <div class="bar-item" data-s="b4"><div class="num">32,392</div><div class="lab">Project Members</div></div>
+  </section>
+
+  <!-- Project Management -->
+  <section class="section-shell bg-e6" data-s="sec-proj">
+    <div class="section-inner" data-s="inner-proj">
+      <div class="box-info" data-s="proj-info">
+        <h2 class="section-title">Manage Projects</h2>
+        <p class="section-sub">Stay organized with a centralized <a href="#">platform for project creation</a>, task assignment, and deadline tracking.</p>
+
+        <div class="feature-block">
+          <h3>Key Features</h3>
+          <ul class="feature-list">
+            <li class="feature-row"><div class="feature-dot">✓</div><div class="feature-txt">Assign tasks to team members.</div></li>
+            <li class="feature-row"><div class="feature-dot">✓</div><div class="feature-txt">Monitor progress and set milestones.</div></li>
+            <li class="feature-row"><div class="feature-dot">✓</div><div class="feature-txt">Log every action and ensure timely delivery.</div></li>
+            <li class="feature-row"><div class="feature-dot alt">★</div><div class="feature-txt">Private label for your website and users.</div></li>
+          </ul>
+        </div>
+
+        <a href="#" class="cta-link">Get Started Now →</a>
+      </div>
+
+      <div class="box-media" data-s="proj-media">
+        <img src="manage-projects.webp" alt="Client Ramp Project Board" onerror="this.src='https://via.placeholder.com/600x400?text=Project+Board'">
+      </div>
+    </div>
+  </section>
+
+  <!-- Client Management -->
+  <section class="section-shell bg-white" data-s="sec-client">
+    <div class="section-inner" data-s="inner-client">
+      <div class="box-media" data-s="client-media">
+        <img src="manage-clients.webp" alt="Client Ramp Client Management" onerror="this.src='https://via.placeholder.com/600x400?text=Client+Management'">
+      </div>
+
+      <div class="box-info" data-s="client-info">
+        <h2 class="section-title">Manage Clients</h2>
+        <p class="section-sub">Easily add, update, and <a href="#">track client details</a> for any stage of a project with seamless communication.</p>
+
+        <div class="feature-block">
+          <h3>Key Features</h3>
+          <ul class="feature-list">
+            <li class="feature-row"><div class="feature-dot">✓</div><div class="feature-txt">Track contact details, project history, and invoices.</div></li>
+            <li class="feature-row"><div class="feature-dot">✓</div><div class="feature-txt">Manage meetings, calls, and notes.</div></li>
+            <li class="feature-row"><div class="feature-dot">✓</div><div class="feature-txt">Share client details with your team securely.</div></li>
+          </ul>
+        </div>
+
+        <a href="#" class="cta-link">Get Started Now →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quotations Management -->
+  <section class="section-shell bg-e6" data-s="sec-quote">
+    <div class="section-inner" data-s="inner-quote">
+      <div class="box-info" data-s="quote-info">
+        <h2 class="section-title">Manage Quotations</h2>
+        <p class="section-sub">Create and track project quotes with ease by organizing your project quotations.</p>
+
+        <div class="feature-block">
+          <h3>Key Features</h3>
+          <ul class="feature-list">
+            <li class="feature-row"><div class="feature-dot">✓</div><div class="feature-txt">Generate customizable PDFs.</div></li>
+            <li class="feature-row"><div class="feature-dot">✓</div><div class="feature-txt">Monitor quote statuses and approvals.</div></li>
+            <li class="feature-row"><div class="feature-dot">✓</div><div class="feature-txt">Simplify follow-ups for better deal closures.</div></li>
+          </ul>
+        </div>
+
+        <a href="#" class="cta-link">Get Started Now →</a>
+      </div>
+
+      <div class="box-media" data-s="quote-media">
+        <img src="manage-qoutations.webp" alt="Client Ramp Quote Board" onerror="this.src='https://via.placeholder.com/600x400?text=Quote+Board'">
+      </div>
+    </div>
+  </section>
+
+  <!-- Invoices Management -->
+  <section class="section-shell bg-white" data-s="sec-inv">
+    <div class="section-inner" data-s="inner-inv">
+      <div class="box-media" data-s="inv-media">
+        <img src="manage-invoices.webp" alt="Client Ramp Invoices Management" onerror="this.src='https://via.placeholder.com/600x400?text=Invoices+Management'">
+      </div>
+
+      <div class="box-info" data-s="inv-info">
+        <h2 class="section-title">Manage Invoices</h2>
+        <p class="section-sub">Simplify billing processes and get paid faster by managing project invoices efficiently.</p>
+
+        <div class="feature-block">
+          <h3>Key Features</h3>
+          <ul class="feature-list">
+            <li class="feature-row"><div class="feature-dot">✓</div><div class="feature-txt">Create tailored invoices with your branding.</div></li>
+            <li class="feature-row"><div class="feature-dot">✓</div><div class="feature-txt">Integrate PayPal for seamless payments.</div></li>
+            <li class="feature-row"><div class="feature-dot alt">★</div><div class="feature-txt">Integrate with your QuickBooks account.</div></li>
+          </ul>
+        </div>
+
+        <a href="#" class="cta-link">Get Started Now →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Administration -->
+  <section class="section-shell bg-e6" data-s="sec-admin">
+    <div class="section-inner" data-s="inner-admin">
+      <div class="box-info" data-s="admin-info">
+        <h2 class="section-title">Administration</h2>
+        <p class="section-sub">Take control of managing user settings, user permissions, subscriptions and system security.</p>
+
+        <div class="feature-block">
+          <h3>Key Features</h3>
+          <ul class="feature-list">
+            <li class="feature-row"><div class="feature-dot">✓</div><div class="feature-txt">Set user roles and permissions.</div></li>
+            <li class="feature-row"><div class="feature-dot">✓</div><div class="feature-txt">Manage sensitive data with confidence.</div></li>
+            <li class="feature-row"><div class="feature-dot">✓</div><div class="feature-txt">Adapt as your business grows.</div></li>
+          </ul>
+        </div>
+
+        <a href="#" class="cta-link">Get Started Now →</a>
+      </div>
+
+      <div class="box-media" data-s="admin-media">
+        <img src="adminstration.webp" alt="Client Ramp Administration" onerror="this.src='https://via.placeholder.com/600x400?text=Administration'">
+      </div>
+    </div>
+  </section>
+
+  <!-- Messaging & Video -->
+  <section class="section-shell bg-white" data-s="sec-msg">
+    <div class="section-inner" data-s="inner-msg">
+      <div class="box-media" data-s="msg-media">
+        <img src="manage-video.webp" alt="Client Ramp Messaging and Video" onerror="this.src='https://via.placeholder.com/600x400?text=Messaging+and+Video'">
+      </div>
+
+      <div class="box-info" data-s="msg-info">
+        <h2 class="section-title">Messaging and Video</h2>
+        <p class="section-sub">Improve client communication with our real-time instant messaging and video tools.</p>
+
+        <div class="feature-block">
+          <h3>Key Features</h3>
+          <ul class="feature-list">
+            <li class="feature-row"><div class="feature-dot">✓</div><div class="feature-txt">Group and one-on-one chats.</div></li>
+            <li class="feature-row"><div class="feature-dot">✓</div><div class="feature-txt">Instant file sharing.</div></li>
+            <li class="feature-row"><div class="feature-dot">✓</div><div class="feature-txt">Host and record video meetings.</div></li>
+          </ul>
+        </div>
+
+        <a href="#" class="cta-link">Get Started Now →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Support -->
+  <section class="support-shell" data-s="support">
+    <h2 class="section-title">Our Support</h2>
+    <div class="support-grid" data-s="support-grid">
+      <div class="support-card">
+        <img src="https://img.icons8.com/ios-filled/50/4dabf7/support.png" alt="Support Icon">
+        <h3>Support When You Need It</h3>
+        <p>Get guidance from our dedicated support team.</p>
+      </div>
+      <div class="support-card">
+        <img src="https://img.icons8.com/ios-filled/50/4dabf7/phone.png" alt="Personalized Assistance Icon">
+        <h3>Personalized Assistance</h3>
+        <p>Tailored solutions for your unique business needs.</p>
+      </div>
+      <div class="support-card">
+        <img src="https://img.icons8.com/ios-filled/50/4dabf7/headphones.png" alt="Available Anytime Icon">
+        <h3>Available Anytime</h3>
+        <p>24/7 support keeping your business running smoothly.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Plans -->
+  <section class="plans-shell" data-s="plans">
+    <h2 class="section-title">Subscription Plan</h2>
+    <p class="section-sub">Choose the Perfect Plan for Your Business</p>
+    <div class="plans-wrap" data-s="plans-wrap">
+      <div class="plan-card">
+        <h3>Trial Plan</h3>
+        <div class="plan-price">Price: $0/month</div>
+        <ul>
+          <li>Manage up to 5 clients.</li>
+          <li>Access to basic project management tools.</li>
+          <li>Create and send up to 5 quotes per month.</li>
+          <li>Generate up to 5 invoices per month.</li>
+          <li>Limited chat functionality (basic messaging only).</li>
+          <li>Basic reporting and analytics.</li>
+          <li>Community support.</li>
+        </ul>
+        <a href="#" class="order-btn">Order Now</a>
+      </div>
+
+      <div class="plan-card">
+        <h3>Starter Plan</h3>
+        <div class="plan-price">Price: $20/month</div>
+        <ul>
+          <li>Manage up to 100 clients.</li>
+          <li>Access all project management features, including task assignment and deadline tracking.</li>
+          <li>Unlimited quotes and invoices.</li>
+          <li>Integration with PayPal and QuickBooks.</li>
+          <li>Full chat functionality (including file sharing and video calls).</li>
+          <li>Advanced reporting and analytics.</li>
+          <li>Email support.</li>
+        </ul>
+        <a href="#" class="order-btn">Order Now</a>
+      </div>
+
+      <div class="plan-card">
+        <h3>Pro Plan</h3>
+        <div class="plan-price">Price: $50/month</div>
+        <ul>
+          <li>Manage up to 500 clients.</li>
+          <li>All features from the Starter Plan.</li>
+          <li>Customized workflows and templates.</li>
+          <li>Mobile app access with real-time sync.</li>
+          <li>Priority email and chat support.</li>
+          <li>Data export capabilities (CSV/PDF).</li>
+          <li>Team performance insights and advanced analytics.</li>
+        </ul>
+        <a href="#" class="order-btn">Order Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="f-wrap" data-s="footer">
+    <div class="f-inner">
+      <div class="f-logo">
+        <img src="logo-client-ramp1.webp" alt="Client Ramp Logo">
+      </div>
+
+      <ul class="f-nav">
+        <li><a href="#">Get Started Now</a></li>
+        <li><a href="#">Sign In</a></li>
+        <li><a href="#">Support</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+
+      <div class="f-contact">
+        <p>105 Tryon Village Dr, Suite 303 #27, Cary, NC 27518</p>
+        <div class="f-social">
+          <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-pinterest-p"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-tiktok"></i></a>
+        </div>
+        <p>Write us a review at: <br>
+          SourceForge, Capterra, G2, Product Hunt, Slashdot, Crozdesk and Trustpilot
+        </p>
+      </div>
+    </div>
+
+    <div class="f-copy">
+      <p>© 2025 ClientRamp - All rights reserved. Use of this website constitutes acceptance of our Subscription Agreement, User Agreement, Privacy Policy and Cookie Policy. ClientRamp trademarks, product names, logos and designs are trademarks of OrganicRankings.com, LLC. or its subsidiaries and may not be used without permission.</p>
+    </div>
+
+    <div class="f-partners">
+      <a href="https://www.capterra.com" target="_blank"><img src="capterra.png" alt="Capterra"></a>
+      <a href="https://www.producthunt.com" target="_blank"><img src="producthunt.png" alt="Product Hunt"></a>
+      <a href="https://www.crowd.com" target="_blank"><img src="g2crowd.png" alt="Crowd"></a>
+      <a href="https://techradar.pro" target="_blank"><img src="techradar.png" alt="TechRadar"></a>
+      <a href="https://sourceforge.net" target="_blank"><img src="sourceforge.png" alt="SourceForge"></a>
+    </div>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger-menu');
+    const sidebar = document.getElementById('sidebar-nav');
+    const closeBtn = document.getElementById('close-sidebar');
+
+    hamburger.addEventListener('click', () => {
+      sidebar.classList.add('open');
+    });
+    closeBtn.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+    });e
+    document.addEventListener('keydown', (e) => {
+      if (.key === 'Escape') sidebar.classList.remove('open');
+    });
+  </script>
+</body>
+</html>
