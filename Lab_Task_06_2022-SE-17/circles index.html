@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Circles Animation</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: white;
+      margin: 0;
+    }
+
+    .container {
+      display: flex;
+      gap: 40px;
+    }
+
+    .circle {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      animation: wave 6s infinite linear; 
+    }
+
+    .red {
+      background: red;
+      animation-delay: 0s;     
+    }
+    .green {
+      background: green;
+      animation-delay: -2s;    
+    }
+    .blue {
+      background: blue;
+      animation-delay: -4s;    
+    }
+
+    @keyframes wave {
+      0%   { transform: translateY(0);     opacity: 1;   }
+      25%  { transform: translateY(-40px); opacity: 0.6; }
+      50%  { transform: translateY(0);     opacity: 1;   }
+      75%  { transform: translateY(40px);  opacity: 0.6; }
+      100% { transform: translateY(0);     opacity: 1;   }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="circle red"></div>
+    <div class="circle green"></div>
+    <div class="circle blue"></div>
+  </div>
+</body>
+</html>

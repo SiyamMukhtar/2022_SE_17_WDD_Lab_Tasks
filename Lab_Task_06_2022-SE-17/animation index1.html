@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Rectangle Path Animation</title>
+  <style>
+    body {
+      margin: 0;
+      background: white;
+    }
+    .mover {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background: red;       
+      border-radius: 0%;
+      will-change: transform, background-color, border-radius;
+      animation: pathMorph 8s linear infinite alternate;
+    }
+
+    @keyframes pathMorph {
+      0% {
+        transform: translate(0px, 0px);
+        background: red;
+        border-radius: 0%;
+      }
+      25% {
+        transform: translate(260px, 0px);
+        background: blue;
+        border-radius: 50%;
+      }
+      50% {
+        transform: translate(260px, 140px);
+        background: red;
+        border-radius: 16px;
+      }
+      75% {
+        transform: translate(0px, 140px);
+        background: #f1c27d; 
+        border-radius: 16px;
+      }
+      100% {
+        transform: translate(0px, 0px);
+        background: green;
+        border-radius: 0%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="mover"></div>
+</body>
+</html>
